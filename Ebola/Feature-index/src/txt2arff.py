@@ -15,9 +15,3 @@ def txt2arff(filepath_X,filepath_y):
   arff.dump('teste.arff',
             df.values, 
             names=df.columns)
-
-filepath_X = 'C:/Users/lucas/Documents/Github/CSBL/Ebola/Feature-index/Data/Input/RNASeq_AdverseEvent.txt'
-filepath_y = 'C:/Users/lucas/Documents/Github/CSBL/Ebola/Feature-index/Data/Input/RNASeq_AdverseEvent_Class.txt'
-txt2arff(filepath_X,filepath_y)
-  
-  
