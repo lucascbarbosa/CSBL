@@ -8,11 +8,11 @@ from weka.core.converters import Loader, Saver
 from weka.attribute_selection import ASSearch, ASEvaluation, AttributeSelection
 from sklearn.preprocessing import LabelBinarizer 
 
-def top_features(input_file_X,input_file_y,top_features_file):
+def top_features(input_file_X,input_file_y,top_features_file,top):
 	jvm.start()
 
 	loader = Loader(classname="weka.core.converters.ArffLoader")
-	data = loader.load_file(f'{input_file_X[:-4]}.arff')
+	data = loader.load_file('%s.arff'%(input_file_X[:-4]))
 	data.class_is_last()
 
 	#InfoGainAttributeEval
@@ -77,8 +77,8 @@ def top_features(input_file_X,input_file_y,top_features_file):
 	"""
 
 	# Features em 2 ou 3 listas
-	while count <= TOP - 1:
-		if lista_InfoGainAttributeEval[count] in lista_ReliefFAttributeEval[0:TOP - 1] or lista_InfoGainAttributeEval[count] in lista_CorrelationAttributeEval[0:TOP - 1]:
+	while count <= top - 1:
+		if lista_InfoGainAttributeEval[count] in lista_ReliefFAttributeEval[0:top - 1] or lista_InfoGainAttributeEval[count] in lista_CorrelationAttributeEval[0:top - 1]:
 			listaTOP.append(lista_InfoGainAttributeEval[count] + 1)
 			count += 1
 		else:
@@ -86,8 +86,8 @@ def top_features(input_file_X,input_file_y,top_features_file):
 
 	count = 0
 
-	while count <= TOP - 1:
-		if lista_ReliefFAttributeEval[count] in lista_CorrelationAttributeEval[0:TOP - 1] and not lista_ReliefFAttributeEval[count] in listaTOP:
+	while count <= top - 1:
+		if lista_ReliefFAttributeEval[count] in lista_CorrelationAttributeEval[0:top - 1] and not lista_ReliefFAttributeEval[count] in listaTOP:
 			listaTOP.append(lista_InfoGainAttributeEval[count] + 1)
 			count += 1
 		else:
