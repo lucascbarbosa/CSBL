@@ -100,7 +100,9 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 		X = X.iloc[:,listaTOP]
 		y = pd.read_csv(input_file_y, sep='\t', header=0, index_col= 0)
 		y = y[coly]
-		X = X.loc[y.index]
+		y = y.dropna()
+		X = X.loc[np.intersect1d(X.index.values,y.index.values)]
+		y = y.loc[np.intersect1d(X.index.values,y.index.values)]
 		# lb = LabelBinarizer()
 		# y = lb.fit_transform(y).ravel().astype(int)
 		X['Class'] = y.values
@@ -111,7 +113,9 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 		X = X.iloc[:,listaTOP]
 		y = pd.read_csv(input_file_y, header=0, index_col= 0)
 		y = y[coly]
-		X = X.loc[y.index]
+		y = y.dropna()
+		X = X.loc[np.intersect1d(X.index.values,y.index.values)]
+		y = y.loc[np.intersect1d(X.index.values,y.index.values)]
 		# lb = LabelBinarizer()
 		# y = lb.fit_transform(y).ravel().astype(int)
 		X['Class'] = y.values
