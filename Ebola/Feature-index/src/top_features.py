@@ -7,12 +7,15 @@ import numpy as np
 from weka.core.converters import Loader, Saver
 from weka.attribute_selection import ASSearch, ASEvaluation, AttributeSelection
 from sklearn.preprocessing import LabelBinarizer 
+import warnings
+warnings.filterwarnings("ignore")
 
-def top_features(input_file_X,input_file_y,top_features_file,top):
+def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file,coly,file_format,top):
 	jvm.start()
 
 	loader = Loader(classname="weka.core.converters.ArffLoader")
-	data = loader.load_file('%s.arff'%(input_file_X[:-4]))
+	path_arff = str(filtered_input_file)[:-4]+'.arff'
+	data = loader.load_file(path_arff)
 	data.class_is_last()
 
 	#InfoGainAttributeEval
@@ -92,11 +95,24 @@ def top_features(input_file_X,input_file_y,top_features_file,top):
 			count += 1
 		else:
 			count += 1
+	if file_format == 'txt':
+		X = pd.read_csv(input_file_X, sep='\t', header=0, index_col= 0).T
+		X = X.iloc[:,listaTOP]
+		y = pd.read_csv(input_file_y, sep='\t', header=0, index_col= 0)
+		y = y[coly]
+		X = X.loc[y.index]
+		# lb = LabelBinarizer()
+		# y = lb.fit_transform(y).ravel().astype(int)
+		X['Class'] = y.values
+		X.to_csv(top_features_file,sep='\t', header=True, index=True)
 
-	df = pd.read_csv(input_file_X, sep=' ', header=0, index_col= 0)
-	df = df.iloc[:,listaTOP]
-	y = pd.read_csv(input_file_y, sep=' ', header=0, index_col= 0)
-	lb = LabelBinarizer()
-	y = lb.fit_transform(y).ravel().astype(int)
-	df['Class'] = y
-	df.to_csv(top_features_file,sep=' ', header=True, index=True)
+	if file_format == 'csv':
+		X = pd.read_csv(input_file_X, header=0, index_col= 0).T
+		X = X.iloc[:,listaTOP]
+		y = pd.read_csv(input_file_y, header=0, index_col= 0)
+		y = y[coly]
+		X = X.loc[y.index]
+		# lb = LabelBinarizer()
+		# y = lb.fit_transform(y).ravel().astype(int)
+		X['Class'] = y.values
+		X.to_csv(top_features_file, header=True, index=True)
