@@ -7,6 +7,7 @@ import numpy as np
 from weka.core.converters import Loader, Saver
 from weka.attribute_selection import ASSearch, ASEvaluation, AttributeSelection
 from sklearn.preprocessing import LabelBinarizer 
+from collections import Counter
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -62,41 +63,19 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 	arquivo.write(str(attsel_CorrelationAttributeEval.results_string))
 	arquivo.close()
 	"""
-
 	jvm.stop()
 
-	# Variável com o valor da quantidade de features
-
-	listaTOP = []
-	count = 0
-
-	""" Somente as features que aparecem nas 3 listas
-	while len(listaTOP) <= TOP - 1:
-		if lista_InfoGainAttributeEval[count] in lista_ReliefFAttributeEval[0:TOP*3] and lista_InfoGainAttributeEval[count] in lista_CorrelationAttributeEval[0:TOP*3]:
-			listaTOP.append(lista_InfoGainAttributeEval[count] + 1)
-			count += 1
-		else:
-			count += 1
-	"""
-
 	# Features em 2 ou 3 listas
-	while count <= top - 1:
-		if lista_InfoGainAttributeEval[count] in lista_ReliefFAttributeEval[0:top - 1] or lista_InfoGainAttributeEval[count] in lista_CorrelationAttributeEval[0:top - 1]:
-			listaTOP.append(lista_InfoGainAttributeEval[count] + 1)
-			count += 1
-		else:
-			count += 1
-
-	count = 0
-
-	while count <= top - 1:
-		if lista_ReliefFAttributeEval[count] in lista_CorrelationAttributeEval[0:top - 1] and not lista_ReliefFAttributeEval[count] in listaTOP:
-			listaTOP.append(lista_InfoGainAttributeEval[count] + 1)
-			count += 1
-		else:
-			count += 1
+	# Variável com o valor da quantidade de features
+	
+	lista = list(lista_InfoGainAttributeEval[:top])+list(lista_ReliefFAttributeEval[:top])+list(lista_ReliefFAttributeEval[:top])
+	counts = Counter(lista)
+	listaTOP = []
+	for el in counts.keys():
+		if counts[el] >= 2:
+			listaTOP.append(el)
 	if file_format == 'txt':
-		X = pd.read_csv(input_file_X, sep='\t', header=0, index_col= 0).T
+		X = pd.read_csv(input_file_X, sep='\t', header=0, index_col= 0).T.astype(np.float64).round(9)
 		X = X.iloc[:,listaTOP]
 		y = pd.read_csv(input_file_y, sep='\t', header=0, index_col= 0)
 		y = y[coly]
@@ -109,7 +88,7 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 		X.to_csv(top_features_file,sep='\t', header=True, index=True)
 
 	if file_format == 'csv':
-		X = pd.read_csv(input_file_X, header=0, index_col= 0).T
+		X = pd.read_csv(input_file_X, header=0, index_col= 0).T.astype(np.float64).round(9)
 		X = X.iloc[:,listaTOP]
 		y = pd.read_csv(input_file_y, header=0, index_col= 0)
 		y = y[coly]

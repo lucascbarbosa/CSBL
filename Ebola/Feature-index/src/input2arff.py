@@ -7,14 +7,15 @@ warnings.filterwarnings("ignore")
 
 def input2arff(input_file_X,input_file_y,filtered_input_file,coly,file_format):
   if file_format == 'txt':
-    X = pd.read_csv(input_file_X, sep='\t', header=0, index_col= 0).T.astype(float).round(6)
+    X = pd.read_csv(input_file_X, sep='\t', header=0, index_col= 0).T.astype(np.float64).round(9)
     y = pd.read_csv(input_file_y, sep='\t', header=0, index_col= 0)
   elif file_format == 'csv':
-    X = pd.read_csv(input_file_X, header=0, index_col= 0).T.astype(float).round(6)
+    X = pd.read_csv(input_file_X, header=0, index_col= 0).T.astype(np.float64).round(9)
     y = pd.read_csv(input_file_y, header=0, index_col= 0)
   else:
     raise('Erro: Somente arquivos txt ou csv.')
     return None
+
   y = y[coly]
   y = y.dropna()
   # X = X.loc[y.index]
@@ -28,3 +29,6 @@ def input2arff(input_file_X,input_file_y,filtered_input_file,coly,file_format):
   path_arff = str(filtered_input_file)[:-4]+'.arff'
   command = 'csv2arff %s %s'%(path_csv,path_arff)
   os.system(command)
+
+
+  
