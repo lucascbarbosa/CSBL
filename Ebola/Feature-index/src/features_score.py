@@ -21,7 +21,7 @@ def features_score(top_features_file,features_score_file,file_format,trees):
     y = df['Class']
     
   #Get scores
-  model = RandomForestClassifier(n_estimators=trees)
+  model = RandomForestClassifier(n_estimators=trees,random_state=42)
   model.fit(X, y)
   importance = model.feature_importances_
   scores = pd.DataFrame()
@@ -29,4 +29,7 @@ def features_score(top_features_file,features_score_file,file_format,trees):
   scores.index = genes
   scores.sort_values(by=['Score'],inplace=True,ascending=False)
   scores['Rank'] = range(1,len(scores)+1)
-  scores[scores['Score']>0.0].to_csv(features_score_file, sep=' ', header=True, index=True)
+  if file_format == 'txt':
+    scores[scores['Score']!=0.0].to_csv(features_score_file, sep='\t', header=True, index=True)
+  if file_format == 'csv':
+    scores[scores['Score']!=0.0].to_csv(features_score_file, header=True, index=True)

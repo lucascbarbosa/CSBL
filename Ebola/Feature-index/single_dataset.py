@@ -15,7 +15,7 @@ trees = int(sys.argv[4])
 input_file_X = Path('Data/Input/'+pathX).absolute()
 path_input = input_file_X.parents[0]
 input_file_y = Path(path_input,'Outcomes.'+file_format)
-filtered_input_file = Path(input_file_X.parents[1],'Filtered_Input/'+pathX)
+filtered_input_file = Path(input_file_X.parents[1],'Filtered_Input/'+pathX[:-4]+'_'+coly+'.'+file_format)
 top_features_file = Path(input_file_X.parents[1],'Top_Features/'+pathX[:-4]+'_'+coly+'_TOP%d.'%(top)+file_format)
 features_score_file = Path(input_file_X.parents[1],'Features_Score/'+pathX[:-4]+'_'+coly+'_TOP%d_SCORES.'%(top)+file_format)
 
