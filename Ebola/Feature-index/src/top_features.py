@@ -64,7 +64,16 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 	arquivo.close()
 	"""
 	jvm.stop()
-
+	
+	lista_InfoGainAttributeEval = list(lista_InfoGainAttributeEval)
+	lista_ReliefFAttributeEval = list(lista_ReliefFAttributeEval)
+	lista_CorrelationAttributeEval = list(lista_CorrelationAttributeEval)
+	lista_InfoGainAttributeEval.remove(len(lista_InfoGainAttributeEval)-1)
+	lista_InfoGainAttributeEval.remove(0)
+	lista_ReliefFAttributeEval.remove(len(lista_ReliefFAttributeEval)-1)
+	lista_ReliefFAttributeEval.remove(0)
+	lista_CorrelationAttributeEval.remove(len(lista_CorrelationAttributeEval)-1)
+	lista_CorrelationAttributeEval.remove(0)
 
 	# Variável com as features que aparecem em 2 de 3 métodos
 
@@ -72,19 +81,16 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 	
 	if top > len(lista_InfoGainAttributeEval):
 		print(f"There is not {top} genes in the dataset. Selecting {len(lista_InfoGainAttributeEval)} genes.")
-		lista = list(lista_InfoGainAttributeEval)+list(lista_ReliefFAttributeEval)+list(lista_CorrelationAttributeEval)
+		lista = lista_InfoGainAttributeEval + lista_ReliefFAttributeEval + lista_CorrelationAttributeEval
 	else:
 		lista = list(lista_InfoGainAttributeEval[:top-1])+list(lista_ReliefFAttributeEval[:top-1])+list(lista_CorrelationAttributeEval[:top-1])
 	
 	counts = Counter(lista)
 	for el in counts.keys():
 		if counts[el] >=2:
-			listaTOP.append(el)
+			listaTOP.append(el-1)
 
-	print(len(lista_InfoGainAttributeEval))
-	print(len(lista_ReliefFAttributeEval))
-	print(len(lista_CorrelationAttributeEval))
-	print(len(listaTOP))
+	listaTOP = np.array(listaTOP)
 
 	if file_format == 'txt':
 		X = pd.read_csv(input_file_X, sep='\t', header=0, index_col= 0).T.astype(np.float64).round(9)

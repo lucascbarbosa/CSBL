@@ -29,4 +29,4 @@ def features_score(top_features_file,features_score_file,file_format,trees):
   scores.index = genes
   scores.sort_values(by=['Score'],inplace=True,ascending=False)
   scores['Rank'] = range(1,len(scores)+1)
-  scores.to_csv(features_score_file, sep=' ', header=True, index=True)
+  scores[scores['Score']>0.0].to_csv(features_score_file, sep=' ', header=True, index=True)
