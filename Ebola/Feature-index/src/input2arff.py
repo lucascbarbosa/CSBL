@@ -20,7 +20,6 @@ def input2arff(input_file_X,input_file_y,filtered_input_file,coly,file_format):
   # X = X.loc[y.index]
   X = X.loc[np.intersect1d(X.index.values,y.index.values)]
   y = y.loc[np.intersect1d(X.index.values,y.index.values)]
-  print(X)
   df = X
   df.index.name = 'Probes'
   df['Class'] = y.values
