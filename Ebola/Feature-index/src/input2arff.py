@@ -15,7 +15,6 @@ def input2arff(input_file_X,input_file_y,filtered_input_file,coly,file_format):
   else:
     raise('Erro: Somente arquivos txt ou csv.')
     return None
-
   y = y[coly]
   y = y.dropna()
   # X = X.loc[y.index]
@@ -25,7 +24,7 @@ def input2arff(input_file_X,input_file_y,filtered_input_file,coly,file_format):
   df.index.name = 'Probes'
   df['Class'] = y.values
   path_csv = str(filtered_input_file)[:-4]+'.csv'
-  df.to_csv(path_csv, header=True, index=True)
+  df.to_csv(path_csv, header=True)
   path_arff = str(filtered_input_file)[:-4]+'.arff'
   command = 'csv2arff %s %s'%(path_csv,path_arff)
   os.system(command)
