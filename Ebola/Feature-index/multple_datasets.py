@@ -17,7 +17,7 @@ try:
 except:
   outcomes = pd.read_csv('Data/Input/Outcomes.csv',header=0,index_col=0).columns.values
   
-for path in os.listdir('Data/Input/')[3:4]:
+for path in os.listdir('Data/Input/')
   for outcome in outcomes:
     if path[:-4] == 'Outcomes':
       pass
