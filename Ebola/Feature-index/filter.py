@@ -5,7 +5,7 @@ import sys
 
 pathX = sys.argv[1]
 file_format = pathX[-3:]
-tol = float(int(sys.argv[2]))
+tol = float(sys.argv[2])
 neighbors = int(sys.argv[3])
 input_file_X = Path('Data/Input/'+pathX).absolute()
 

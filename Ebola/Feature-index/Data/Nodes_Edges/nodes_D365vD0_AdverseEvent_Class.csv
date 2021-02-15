@@ -1,0 +1,12 @@
+id,label,group,nodesize
+eosinophils,eosinophils,1,100
+mch,mch,1,96
+monocytes,monocytes,1,86
+platelets,platelets,1,74
+neutrophils,neutrophils,1,73
+leukocytes,leukocytes,1,73
+lymphocytes,lymphocytes,1,70
+hematocrit,hematocrit,1,66
+basophils,basophils,1,60
+mcv,mcv,1,59
+hemoglobin,hemoglobin,1,55

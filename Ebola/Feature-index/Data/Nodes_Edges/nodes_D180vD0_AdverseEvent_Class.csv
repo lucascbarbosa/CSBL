@@ -1,0 +1,14 @@
+id,label,group,nodesize
+mch,mch,1,100
+lymphocytes,lymphocytes,1,78
+neutrophils,neutrophils,1,70
+mcv,mcv,1,64
+basophils,basophils,1,57
+ast,ast,1,46
+monocytes,monocytes,1,45
+leukocytes,leukocytes,1,43
+hemoglobin,hemoglobin,1,38
+hematocrit,hematocrit,1,36
+creatinine,creatinine,1,35
+alt,alt,1,33
+platelets,platelets,1,32
