@@ -1,14 +1,14 @@
 @relation C:\Users\lucas\Documents\Github\CSBL\Ebola\Feature-index\Data\Filtered_Input\Xv0_Log2_Luminex_D7vD0_AntibodyResponse_Class
 
 @attribute Probes {'G101','G102','G103','G104','G105','G108','G110','G111','G112','G117','G119','G120','G126','G128','G130','G302','G304','G305','G306','G311','G313','G314','G315','G322','G324','G332','G336','G337','G347','G358'}
-@attribute CX3CL1 numeric
-@attribute CSF1 numeric
-@attribute CXCL10 numeric
-@attribute CXCL11 numeric
-@attribute OSM numeric
-@attribute MCP3 numeric
-@attribute MCP4 numeric
-@attribute TRAIL numeric
+@attribute c_CX3CL1 numeric
+@attribute c_CSF1 numeric
+@attribute c_CXCL10 numeric
+@attribute c_CXCL11 numeric
+@attribute c_OSM numeric
+@attribute c_MCP3 numeric
+@attribute c_MCP4 numeric
+@attribute c_TRAIL numeric
 @attribute Class {'P','w'}
 @data
 'G101',-0.382496051,0.653279137,1.20644334,1.464042068,-2.489334231,0.0,-0.338770243,0.0,'w'

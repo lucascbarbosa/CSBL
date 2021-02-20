@@ -4,24 +4,24 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 import sys
-from yellowbrick.target import FeatureCorrelation
+from scipy.stats import spearmanr
 import plotly.graph_objects as go
 import networkx as nx
 import matplotlib.pyplot as plt
 
 tol = float(sys.argv[1])
 
-time_points = [f'D{i}vD0'for i in [1,3,7,14,28,180,365]]
+time_points = [f'D{i}vD0'for i in [1,3,7,14,28]]
 features_score_path = 'Data/Features_Score/'
 try:
   outcomes = pd.read_csv('Data/Input/Outcomes.txt', sep='\t', header=0,index_col=0)
 except:
   outcomes = pd.read_csv('Data/Input/Outcomes.csv',header=0,index_col=0)
 
+
 def get_nodes_edges(time_points,features_score_path,outcomes):
   for outcome in outcomes.columns.values:
     for time_point in time_points:
-      # print(outcome,time_point,'\n')
       genes = []
       scores = []
       groups = []
@@ -53,43 +53,56 @@ def get_nodes_edges(time_points,features_score_path,outcomes):
           y = y.loc[np.intersect1d(X.index.values,y.index.values)]
           X = X.loc[np.intersect1d(X.index.values,y.index.values)]
           Xs.append(X)
-
       X = pd.concat(Xs,axis=1)
-      X = X.corr()
-      for j in range(len(X)):
-        for i in range(len(X)):
-          if i != j:
-            if X.iloc[i,j] > tol:
-              edges_group.append(1)
-              sources.append(X.columns[j])
-              targets.append(X.index[i])
-              corrs.append(abs(X.iloc[i,j]))
-            elif X.iloc[i,j] < -tol:
-              edges_group.append(0)
-              sources.append(X.columns[j])
-              targets.append(X.index[i])
-              corrs.append(abs(X.iloc[i,j]))
+      corrX = spearmanr(X)[0] #spearman correlation
 
-      genes = np.array(genes).ravel()
-      scores = np.array(scores).ravel()
-      groups = np.array(groups).ravel()
+      for j in range(len(corrX)):
+        for i in range(len(corrX)):
+          if i != j:
+            if corrX[i,j] > tol:
+              edges_group.append(1)
+              sources.append(X.columns[i])
+              targets.append(X.columns[j])
+              corrs.append(abs(corrX[i,j]))
+            elif corrX[i,j] < -tol:
+              edges_group.append(0)
+              sources.append(X.columns[i])
+              targets.append(X.columns[j])
+              corrs.append(abs(corrX[i,j]))
+
+      relevant_genes = []
+      relevant_groups = []
+      relevant_scores = []
+
+      for gene,group,score in list(zip(genes,groups,scores)):
+        if gene in sources or gene in targets:
+          relevant_genes.append(gene)
+          relevant_groups.append(group)
+          relevant_scores.append(score)
+        else:
+          pass
+
+      relevant_genes = np.array(relevant_genes).ravel()
+      relevant_groups = np.array(relevant_groups).ravel()
+      relevant_scores = np.array(relevant_scores).ravel()
       sources = np.array(sources).ravel()
       targets = np.array(targets).ravel()
       corrs = np.array(corrs).ravel()
-
-      node['label'] = genes
-      node['group'] = groups
-      node['nodesize'] = scores 
+      node['label'] = relevant_genes
+      node['group'] = relevant_groups
+      node['nodesize'] = relevant_scores 
       node['nodesize'] = node['nodesize']*100/node['nodesize'].max()
+      node['nodesize'] = node['nodesize']*len(node['nodesize'])
       node['nodesize'] = node['nodesize'].astype(int)
       edge['source'] = sources
       edge['target'] = targets
       edge['Weight'] = corrs
       edge['group'] = edges_group
-      node.index = genes
+      node.index = relevant_genes
       node.index.name = 'id'
       edge.index.name = 'id'
-      node.to_csv(f'Data/Nodes_Edges/nodes_{time_point}_{outcome}.csv')
-      edge.to_csv(f'Data/Nodes_Edges/edges_{time_point}_{outcome}.csv')
+      node.to_csv(f'Data/Nodes_Edges/{time_point}_{outcome}_nodes.csv')
+      edge.to_csv(f'Data/Nodes_Edges/{time_point}_{outcome}_edges.csv')
+
 
 get_nodes_edges(time_points,features_score_path,outcomes)

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
-
+from scipy.stats import spearmanr
 # pathX = 'C:/Users/lucas/Documents/Github/CSBL/Ebola/Feature-index/Data/Input'
 # pathY = 'C:/Users/lucas/Documents/Github/CSBL/Ebola/Feature-index/Data/Input/Outcomes.txt'
 
@@ -17,4 +17,7 @@ import os
 path = 'C:/Users/lucas/Documents/Github/CSBL/Ebola/Feature-index/Data/Filtered_Input/Xv0_Log2_CBC_Clinical_D28vD0_AntibodyResponse_Class.csv'
 df = pd.read_csv(path, header=0, index_col=0)
 
-print(df)
+lista = 'G101 G105 G110 G103 G102'.split()
+lista2 = 'G101 G110'.split()
+
+print(lista2 in lista)

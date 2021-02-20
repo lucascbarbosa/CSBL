@@ -1,17 +1,17 @@
 @relation C:\Users\lucas\Documents\Github\CSBL\Ebola\Feature-index\Data\Filtered_Input\Xv0_Log2_Luminex_D1vD0_AdverseEvent_Class
 
 @attribute Probes {'G101','G102','G103','G104','G105','G108','G109','G110','G111','G112','G114','G117','G119','G120','G126','G128','G130','G302','G303','G304','G305','G306','G311','G313','G314','G315','G317','G322','G324','G332','G336','G337','G347','G358'}
-@attribute CX3CL1 numeric
-@attribute CSF1 numeric
-@attribute CXCL10 numeric
-@attribute RANKL numeric
-@attribute CXCL11 numeric
-@attribute OSM numeric
-@attribute MCP3 numeric
-@attribute MCP4 numeric
-@attribute IL15 numeric
-@attribute TRAIL numeric
-@attribute MCP2 numeric
+@attribute c_CX3CL1 numeric
+@attribute c_CSF1 numeric
+@attribute c_CXCL10 numeric
+@attribute c_RANKL numeric
+@attribute c_CXCL11 numeric
+@attribute c_OSM numeric
+@attribute c_MCP3 numeric
+@attribute c_MCP4 numeric
+@attribute c_IL15 numeric
+@attribute c_TRAIL numeric
+@attribute c_MCP2 numeric
 @attribute Class {'AE','NO'}
 @data
 'G101',-0.382496051,1.253970002,2.363869728,0.477393577,4.271947682,0.417982588,2.201117506,-0.197277615,1.292553493,1.295655827,2.279295427,'NO'
