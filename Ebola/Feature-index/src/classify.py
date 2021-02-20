@@ -90,7 +90,7 @@ if classifier == 'SVM':
                     )
   svc.fit(X_train,y_train)
   y_pred = svc.predict(X_test)
-  cm = confusion_matrix(y_test,y_pred)
+  cm = list(confusion_matrix(y_test,y_pred).astype(str).ravel())
 
 # if classifier == 'KNN':
 
@@ -99,5 +99,6 @@ if classifier == 'SVM':
 # if classifier == 'DecisionTree':
 
 # if classifier == 'RandomForest':
-
-print('\n',cm)
+cm = '-'.join(cm)
+cm = cm.encode('ascii')
+print(cm,end='')
