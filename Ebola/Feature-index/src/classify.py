@@ -38,7 +38,8 @@ filtered_input_file = sys.argv[3]
 coly = sys.argv[4]
 classifier = sys.argv[5]
 top = int(sys.argv[6])
-n_splits = int(sys.argv[7])
+test_size = float(sys.argv[7])
+n_splits = int(sys.argv[8])
 file_format = input_file_X.split('/')[-1][-3:]
 
 X = top_features(input_file_X,coly,file_format,top,input_file_y=input_file_y,filtered_input_file=filtered_input_file,save=True)
@@ -49,7 +50,6 @@ y = pd.DataFrame(lb.fit_transform(y).ravel())
 sm = SMOTE(random_state=42)
 X, y = sm.fit_resample(X, y)
 
-test_size = 0.3
 kfold = KFold(n_splits,shuffle=True,random_state=42)
 
 #SVC
@@ -77,7 +77,7 @@ param_grid_sgd = {'loss':['hinge', 'perceptron'],
                 }
 
 
-X_train,X_test,y_train,y_test = train_test_split(X,y)
+X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=test_size)
 
 if classifier == 'SVM':
   hp_svc = get_hiperparams(X_train,X_test,y_train,y_test,kfold,param_grid_svc,SVC())
