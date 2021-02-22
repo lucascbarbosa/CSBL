@@ -77,7 +77,7 @@ def top_features(input_file_X,coly,file_format,top,input_file_y=None,filtered_in
 	# Variável com as features que aparecem em 2 de 3 métodos
 
 	listaTOP = []
-	
+
 	if top > len(lista_InfoGainAttributeEval):
 		print(f"There is not {top} genes in the dataset. Selecting {len(lista_InfoGainAttributeEval)} genes.")
 		lista = lista_InfoGainAttributeEval + lista_ReliefFAttributeEval + lista_CorrelationAttributeEval
