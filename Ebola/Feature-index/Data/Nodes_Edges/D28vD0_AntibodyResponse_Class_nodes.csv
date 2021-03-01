@@ -1,0 +1,10 @@
+id,label,group,nodesize
+SLC1A5,SLC1A5,1,12
+SGTA,SGTA,1,10
+LYL1,LYL1,1,7
+DDX39A,DDX39A,1,5
+UTP18,UTP18,1,3
+SPPL3,SPPL3,1,3
+BLVRB,BLVRB,1,1
+leukocytes,leukocytes,2,100
+neutrophils,neutrophils,2,67

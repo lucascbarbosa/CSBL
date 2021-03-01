@@ -1,0 +1,11 @@
+id,label,group,nodesize
+PDCD1,PDCD1,1,15
+ZNF37BP,ZNF37BP,1,12
+DDX42,DDX42,1,8
+ACAA2,ACAA2,1,5
+ACBD5,ACBD5,1,5
+CYBB,CYBB,1,2
+hemoglobin,hemoglobin,2,100
+leukocytes,leukocytes,2,83
+hematocrit,hematocrit,2,62
+neutrophils,neutrophils,2,61

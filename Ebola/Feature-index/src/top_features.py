@@ -11,9 +11,8 @@ from collections import Counter
 import warnings
 warnings.filterwarnings("ignore")
 
-def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file,coly,file_format,top):
+def top_features(input_file_X,coly,file_format,top,input_file_y=None,filtered_input_file=None,top_features_file=None,save=True):
 	jvm.start()
-
 	loader = Loader(classname="weka.core.converters.ArffLoader")
 	path_arff = str(filtered_input_file)[:-4]+'.arff'
 	data = loader.load_file(path_arff)
@@ -78,7 +77,7 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 	# Variável com as features que aparecem em 2 de 3 métodos
 
 	listaTOP = []
-	
+
 	if top > len(lista_InfoGainAttributeEval):
 		print(f"There is not {top} genes in the dataset. Selecting {len(lista_InfoGainAttributeEval)} genes.")
 		lista = lista_InfoGainAttributeEval + lista_ReliefFAttributeEval + lista_CorrelationAttributeEval
@@ -103,7 +102,8 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 		# lb = LabelBinarizer()
 		# y = lb.fit_transform(y).ravel().astype(int)
 		X['Class'] = y.values
-		X.to_csv(top_features_file,sep='\t', header=True, index=True)
+		if save:
+			X.to_csv(top_features_file,sep='\t', header=True, index=True)
 
 	if file_format == 'csv':
 		X = pd.read_csv(input_file_X, header=0, index_col= 0).T.astype(np.float64).round(9)
@@ -116,4 +116,7 @@ def top_features(input_file_X,input_file_y,filtered_input_file,top_features_file
 		# lb = LabelBinarizer()
 		# y = lb.fit_transform(y).ravel().astype(int)
 		X['Class'] = y.values
-		X.to_csv(top_features_file, header=True, index=True)
+		if save:
+			X.to_csv(top_features_file, header=True, index=True)
+
+	return X
