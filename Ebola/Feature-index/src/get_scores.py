@@ -3,8 +3,6 @@ import os
 
 
 def get_scores(features_score_path,features_score_file,file_format):
-  total_scores = pd.DataFrame()
-  genes = []
 
   if file_format == 'txt':
     df = pd.read_csv(features_score_path+features_score_file, sep='\t',header= 0, index_col=0)

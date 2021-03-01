@@ -90,7 +90,7 @@ def top_features(input_file_X,coly,file_format,top,input_file_y=None,filtered_in
 			listaTOP.append(el-1)
 
 	listaTOP = np.array(listaTOP)
-
+	
 	if file_format == 'txt':
 		X = pd.read_csv(input_file_X, sep='\t', header=0, index_col= 0).T.astype(np.float64).round(9)
 		X = X[X.columns[listaTOP]]
@@ -104,6 +104,8 @@ def top_features(input_file_X,coly,file_format,top,input_file_y=None,filtered_in
 		X['Class'] = y.values
 		if save:
 			X.to_csv(top_features_file,sep='\t', header=True, index=True)
+		else:
+			return X
 
 	if file_format == 'csv':
 		X = pd.read_csv(input_file_X, header=0, index_col= 0).T.astype(np.float64).round(9)
@@ -118,5 +120,5 @@ def top_features(input_file_X,coly,file_format,top,input_file_y=None,filtered_in
 		X['Class'] = y.values
 		if save:
 			X.to_csv(top_features_file, header=True, index=True)
-
-	return X
+		else:
+			return X

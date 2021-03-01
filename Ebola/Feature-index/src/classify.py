@@ -1,12 +1,13 @@
 from top_features import top_features
 from pathlib import Path
 import sys
+import numpy as np
 
 import pandas as pd
 
 from sklearn.ensemble import RandomForestClassifier
 
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, roc_auc_score
 
 from sklearn.preprocessing import StandardScaler, LabelBinarizer
 from sklearn.pipeline import make_pipeline
@@ -22,7 +23,7 @@ top = int(sys.argv[6])
 test_size = float(sys.argv[7])
 file_format = input_file_X.split('/')[-1][-3:]
 
-X = top_features(input_file_X,coly,file_format,top,input_file_y=input_file_y,filtered_input_file=filtered_input_file,save=True)
+X = top_features(input_file_X,coly,file_format,top,input_file_y,filtered_input_file,None,False)
 y = X['Class']
 X.drop(['Class'],axis=1,inplace=True)
 lb = LabelBinarizer()
@@ -37,6 +38,9 @@ rf = make_pipeline(StandardScaler(),
                   )
 rf.fit(X_train,y_train)
 y_pred = rf.predict(X_test)
-cm = list(confusion_matrix(y_test,y_pred).astype(str).ravel())
-cm = '-'.join(cm)
-print(cm,end='')
+
+data = list(confusion_matrix(y_test,y_pred).astype(str).ravel())
+auc = roc_auc_score(y_test,y_pred)
+data.append(str(np.float32(auc).round(2)))
+data = '-'.join(data)
+print(data,end='')

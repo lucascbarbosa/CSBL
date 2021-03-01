@@ -91,8 +91,6 @@ def get_nodes_edges(time_points,features_score_path,outcomes):
       node['label'] = relevant_genes
       node['group'] = relevant_groups
       node['nodesize'] = relevant_scores 
-      node['nodesize'] = node['nodesize']*100/node['nodesize'].max()
-      node['nodesize'] = node['nodesize']*len(node['nodesize'])
       node['nodesize'] = node['nodesize'].astype(int)
       edge['source'] = sources
       edge['target'] = targets
